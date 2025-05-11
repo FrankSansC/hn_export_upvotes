@@ -105,12 +105,15 @@ def get_credentials(args):
     return username, password
 
 def main():
-    parser = argparse.ArgumentParser(description="Export Hacker News upvoted posts to JSON.")
-    parser.add_argument("--username", help="Hacker News username")
-    parser.add_argument("--password", help="Hacker News password")
-    parser.add_argument("--output", default="upvoted_posts.json", help="Output filename (default: upvoted_posts.json)")
-    parser.add_argument("--overwrite", action="store_true", help="Overwrite output file if it already exists")
-    parser.add_argument("--debug", action="store_true", help="Enable debug logging")
+    parser = argparse.ArgumentParser(
+        description="Export your Hacker News (https://news.ycombinator.com/) upvoted posts to JSON.",
+        epilog="You can also set HN_USERNAME and HN_PASSWORD environment variables to avoid using --username / --password.",
+        allow_abbrev=False)
+    parser.add_argument("-u", "--username", help="Hacker News username")
+    parser.add_argument("-p", "--password", help="Hacker News password")
+    parser.add_argument("-o", "--output", default="upvoted_posts.json", help="output filename (default: upvoted_posts.json)")
+    parser.add_argument("--overwrite", action="store_true", help="overwrite output file if it already exists")
+    parser.add_argument("--debug", action="store_true", help="enable debug logging")
     args = parser.parse_args()
 
     # Check if output file already exist and if we're ok to overwrite it
