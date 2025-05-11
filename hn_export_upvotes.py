@@ -1,4 +1,5 @@
 import os
+import sys
 import argparse
 import requests
 from bs4 import BeautifulSoup
@@ -108,8 +109,15 @@ def main():
     parser.add_argument("--username", help="Hacker News username")
     parser.add_argument("--password", help="Hacker News password")
     parser.add_argument("--output", default="upvoted_posts.json", help="Output filename (default: upvoted_posts.json)")
+    parser.add_argument("--overwrite", action="store_true", help="Overwrite output file if it already exists")
     parser.add_argument("--debug", action="store_true", help="Enable debug logging")
     args = parser.parse_args()
+
+    # Check if output file already exist and if we're ok to overwrite it
+    if os.path.exists(args.output) and not args.overwrite:
+        print(f"Error: File '{args.output}' already exists. Use --overwrite to replace it.")
+        # EEXIST 17 File exists
+        sys.exit(17)
 
     username, password = get_credentials(args)
 
