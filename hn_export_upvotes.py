@@ -29,22 +29,39 @@ class HackerNewsScraper:
         upvotes = []
         next_link = f"{self.base_url}/upvoted?id={self.username}"
         while next_link:
+            print(f"Scraping page {next_link}")
             resp = self.session.get(next_link)
             soup = BeautifulSoup(resp.text, "html.parser")
-            rows = soup.select("tr.athing")
+            rows = soup.select("tr.athing.submission")
 
             for row in rows:
-                title_elem = row.select_one("a.storylink")
-                if not title_elem:
+                item_id = row.get("id")
+                print(f"item_id = {item_id}", end=" ")
+                titleline = row.select_one("span.titleline")
+                if not titleline:
+                    print(f"❌ Error: no span.titleline found for item_id {item_id}")
                     continue
-                title = title_elem.text
-                link = title_elem['href']
-                item_id = row['id']
+
+                # Extract the first <a> inside titleline
+                link_tag = titleline.find("a")
+                if not link_tag:
+                    print(f"❌ Error: no a found for item_id {item_id}")
+                    continue
+
+                title = link_tag.text.strip()
+                print(f"title = {title}", end = " ")
+
+                # May be missing (flagged/dead)
+                url = link_tag.get("href", "").strip()
+                print(f"url = {url}")
+                #print(f"item_id = {item_id}, title = {title}, url = {url}")
+
                 upvotes.append({
                     "id": item_id,
                     "title": title,
-                    "url": link
+                    "url": url
                 })
+
 
             more_link = soup.find("a", string="More")
             if more_link:
