@@ -53,11 +53,23 @@ class HackerNewsScraper:
 
                 # May be missing (flagged/dead)
                 url = link_tag.get("href", "").strip()
-                print(f"url = {url}")
-                #print(f"item_id = {item_id}, title = {title}, url = {url}")
+                print(f"url = {url}", end = " ")
+
+                # Get the next <tr> sibling and look for timestamp
+                timestamp = ""
+                next_row = row.find_next_sibling("tr")
+                if next_row:
+                    age_span = next_row.select_one("span.age")
+                    if age_span and age_span.has_attr("title"):
+                        timestamp_parts = age_span["title"].split()
+                        if len(timestamp_parts) > 1:
+                            # The UNIX timestamp
+                            timestamp = timestamp_parts[1]
+                print(f"timestamp = {timestamp}")
 
                 upvotes.append({
                     "id": item_id,
+                    "timestamp": timestamp,
                     "title": title,
                     "url": url
                 })
