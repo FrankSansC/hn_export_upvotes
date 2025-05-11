@@ -7,11 +7,16 @@ import time
 import getpass
 
 class HackerNewsScraper:
-    def __init__(self, username, password):
+    def __init__(self, username, password, debug=False):
         self.session = requests.Session()
         self.username = username
         self.password = password
         self.base_url = "https://news.ycombinator.com"
+        self.debug = debug
+
+    def _debug_print(self, *args):
+        if self.debug:
+            print("[DEBUG] ", *args)
 
     def login(self):
         login_url = f"{self.base_url}/login"
@@ -29,14 +34,14 @@ class HackerNewsScraper:
         upvotes = []
         next_link = f"{self.base_url}/upvoted?id={self.username}"
         while next_link:
-            print(f"Scraping page {next_link}")
+            self._debug_print(f"Scraping page {next_link}")
             resp = self.session.get(next_link)
             soup = BeautifulSoup(resp.text, "html.parser")
             rows = soup.select("tr.athing.submission")
 
             for row in rows:
                 item_id = row.get("id")
-                print(f"item_id = {item_id}", end=" ")
+                self._debug_print(f" > item_id = {item_id}")
                 titleline = row.select_one("span.titleline")
                 if not titleline:
                     print(f"❌ Error: no span.titleline found for item_id {item_id}")
@@ -49,11 +54,11 @@ class HackerNewsScraper:
                     continue
 
                 title = link_tag.text.strip()
-                print(f"title = {title}", end = " ")
+                self._debug_print(f"    - title = {title}")
 
                 # May be missing (flagged/dead)
                 url = link_tag.get("href", "").strip()
-                print(f"url = {url}", end = " ")
+                self._debug_print(f"    - url = {url}")
 
                 # Get the next <tr> sibling and look for timestamp
                 timestamp = ""
@@ -65,7 +70,7 @@ class HackerNewsScraper:
                         if len(timestamp_parts) > 1:
                             # The UNIX timestamp
                             timestamp = timestamp_parts[1]
-                print(f"timestamp = {timestamp}")
+                self._debug_print(f"    - timestamp = {timestamp}")
 
                 upvotes.append({
                     "id": item_id,
@@ -103,11 +108,12 @@ def main():
     parser.add_argument("--username", help="Hacker News username")
     parser.add_argument("--password", help="Hacker News password")
     parser.add_argument("--output", default="upvoted_posts.json", help="Output filename (default: upvoted_posts.json)")
+    parser.add_argument("--debug", action="store_true", help="Enable debug logging")
     args = parser.parse_args()
 
     username, password = get_credentials(args)
 
-    scraper = HackerNewsScraper(username, password)
+    scraper = HackerNewsScraper(username, password, debug=args.debug)
     try:
         scraper.login()
         print(f"✅ Logged in as {username}. Scraping upvoted posts...")
