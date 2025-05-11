@@ -15,16 +15,7 @@ class HackerNewsScraper:
 
     def login(self):
         login_url = f"{self.base_url}/login"
-        resp = self.session.get(login_url)
-        soup = BeautifulSoup(resp.text, "html.parser")
-        fnid_input = soup.find("input", {"name": "fnid"})
-
-        if not fnid_input:
-            raise Exception("Unable to find fnid input. HN login form may have changed.")
-
-        fnid = fnid_input["value"]
         data = {
-            "fnid": fnid,
             "acct": self.username,
             "pw": self.password
         }
