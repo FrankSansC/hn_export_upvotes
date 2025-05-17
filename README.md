@@ -26,6 +26,13 @@ options:
 You can also set HN_USERNAME and HN_PASSWORD environment variables to avoid using --username / --password.
 ```
 
+# TODO
+
+- [ ] Use [`uv`](https://github.com/astral-sh/uv) to install dependencies ([`requests`](https://github.com/psf/requests) and [`beautifulsoup`](https://code.launchpad.net/beautifulsoup))
+- [ ] Procedure to use a [systemd timer](https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html) (and not `cron`) to call it periodically
+- [ ] Script to version the output JSON file into a git repository
+- [ ] Use [`ntfy`](https://github.com/binwiederhier/ntfy) to have notifications when we grab new entries
+
 # License
 
 [MIT License](./LICENSE)
