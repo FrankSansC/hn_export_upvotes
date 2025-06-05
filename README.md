@@ -4,7 +4,11 @@ The purpose of this script is to export **your** upvoted posts list from [Hacker
 
 But why you may ask ? First and foremost because I haven't found any working tool that were able to do this. And second because I consider this to be **my** data, and I want to be able to backup it.
 
+## AI usage
+
 Please note that most of this script has been written using [OpenAI](https://openai.com/) [ChatGPT](https://chatgpt.com/) (GPT-4o) as a teammate.
+
+This project is an excuse to see how good AI is at helping to write small tools (I always have lots of ideas but don't have time to implement them).
 
 # Usage
 
