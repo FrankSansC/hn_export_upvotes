@@ -37,6 +37,21 @@ You can also set HN_USERNAME and HN_PASSWORD environment variables to avoid usin
 - [ ] Script to version the output JSON file into a git repository
 - [ ] Use [`ntfy`](https://github.com/binwiederhier/ntfy) to have notifications when we grab new entries
 
+# Similar projects
+
+Here's a non-exhaustive list, in non-specific order, of similar projects to `hn_export_upvotes` :
+
+- [Show HN: Export HN Favorites to a CSV File](https://news.ycombinator.com/item?id=22788236)
+  - [getHNFavorites.js](https://gabrielsroka.github.io/getHNFavorites.js)
+- [hacker-new-favorites-api](https://github.com/reactual/hacker-news-favorites-api)
+- [hn-utils](https://github.com/jaytaylor/hn-utils)
+- [Show HN: Export HN saved links (upvotes) as JSON or CSV](https://news.ycombinator.com/item?id=11754099)
+  - [HN-Saved-Links-Export](https://github.com/amjd/HN-Saved-Links-Export)
+- [hn-saved-export](https://github.com/thomaskcr/hn-saved-export)
+- [hackernews-to-raindrop](https://github.com/davenicoll/hackernews-to-raindrop)
+- [archivy-hn](https://github.com/archivy/archivy-hn)
+- [hackernewsGetUserUpvotesDevConsole.js](https://gist.github.com/VehpuS/d70dc3669d96da953c7a4f9f6665e83d)
+
 # License
 
 [MIT License](./LICENSE)
