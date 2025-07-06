@@ -1,11 +1,21 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "requests",
+#     "beautifulsoup4"
+# ]
+# ///
+
 import os
 import sys
 import argparse
-import requests
-from bs4 import BeautifulSoup
 import json
 import time
 import getpass
+# Third-party modules
+import requests
+from bs4 import BeautifulSoup
 
 class HackerNewsScraper:
     def __init__(self, username, password, debug=False):
